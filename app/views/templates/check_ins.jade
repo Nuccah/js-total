@@ -1,0 +1,10 @@
+each checkIn in checkIns
+  li(class=checkIn.extra_class data-id=checkIn.id data-cid=checkIn.cid)
+    .icon: img.img-responsive(src=checkIn.icon)
+    .details
+      strong(title=checkIn.name)= checkIn.name
+      time= checkInMoment(checkIn)
+      address= checkIn.vicinity
+      cite= checkIn.userName
+      if checkIn.comment
+        q= checkIn.comment

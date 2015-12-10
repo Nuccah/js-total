@@ -1,0 +1,3 @@
+mixin button(classes)
+  - classes = classes.replace(/\b(\w)/g, 'btn-$1')
+  button.btn(class=classes type=(attributes.type || 'button') disabled=attributes.disabled data-dismiss=attributes['data-dismiss']): block

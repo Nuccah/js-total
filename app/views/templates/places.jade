@@ -1,0 +1,12 @@
+each place in places
+  li.col-md-4.col-sm-6(data-place-id=place.id class=(placeId === place.id ? 'active' : ''))
+    .icon: img(class="img-responsive" src=place.icon)
+    .details
+      strong(title=place.name)= place.name
+      address= place.vicinity
+      small (à #{place.distance}m, soit #{secondsToMinutes(place.duration)} à pied)
+
+unless places && places.length
+  li.searching
+    img.spinner(src="/images/spinner.gif")
+    | Recherche en cours…

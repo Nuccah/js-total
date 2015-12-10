@@ -1,0 +1,36 @@
+@import 'nib'
+
+#historyUI #history
+  transform translate3d(0, 0, 0) // hw-accel
+  margin 0
+  // padding 0
+  max-height: 600px;
+  overflow auto
+
+  li
+    position relative
+    clear left
+    min-height 60px
+    transition all 0.5s ease-in-out
+    transform-origin center top
+
+    &[data-id]
+      cursor pointer
+
+    &.new
+      height 0
+      transform scale(1, 0)
+
+    .icon, img
+      width 32px
+    img
+      height 32px
+    .details
+      margin-left 36px
+
+  time
+    position absolute
+    right 3px
+    top 0
+    color #999
+    font-size 80%

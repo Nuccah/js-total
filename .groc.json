@@ -1,0 +1,14 @@
+{
+  "glob": [
+    "app/**/*.js",
+    "test/**/*.js",
+    "tests-jasmine/spec/*.js",
+    "tests-qunit/collection.js",
+    "config.coffee",
+    "jst-server.coffee",
+    "package.json",
+    ".groc.json"
+  ],
+  "github": false,
+  "strip": "--no-strip"
+}

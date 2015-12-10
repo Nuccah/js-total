@@ -33,5 +33,5 @@ var application = require('application');
 $(function() {
   moment.lang('en-US');
   application.initialize();
-  Backbone.history.start();
+  Backbone.history.start({pushState:true});
 });

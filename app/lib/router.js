@@ -12,7 +12,8 @@ module.exports = Backbone.Router.extend({
   // -----------
   routes: {
     // La route racine, pour la page principale
-    '': 'home'
+    '': 'home',
+    'check-in/:id' : 'showCheckIn',
   },
 
   // Gestionnaires
@@ -27,5 +28,10 @@ module.exports = Backbone.Router.extend({
 
     $('body').html(application.homeView.render().el);
     this.homeRendered = true;
-  }
+  },
+
+  showCheckIn: function showCheckIn(id) {
+    this.home(true);
+    console.log('showCheckIn ', id);
+  },
 });

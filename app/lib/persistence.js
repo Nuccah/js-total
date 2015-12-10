@@ -15,8 +15,13 @@ var localStore = new LawnChair({
 }, function() {});
 
 function addCheckIn(checkIn) {
+	console.log(checkIn);
+	// if (collection.findWhere(_.pick(checkIn, 'key', 'userName'))) {
+	// 	return;
+	// }
+
 	checkIn.key = checkIn.key || Date.now();
-	collection[('id' in checkIn) ? 'add' : 'create'](checkIn);
+	collection['id' in checkIn ? 'add' : 'create'](checkIn);
 }
 
 function getCheckIns() {
@@ -50,7 +55,7 @@ function syncPending() {
 }
 
 function initialLoad() {
-	localStore.all(function lsAll(checkins){
+	localStore.all(function lsAll(checkins) {
 		collection.reset(checkins);
 		syncPending();
 	});
@@ -72,6 +77,14 @@ collection.on('reset', function() {
 collection.on('add', function(model) {
 	localStore.save(model.toJSON());
 	Backbone.Mediator.publish('checkins:new', model.toJSON());
+});
+
+collection.on('sync', function(model) {
+	if (!(model instanceof collection.model)) {
+		return;
+	}
+
+	localStore.save(model.toJSON());
 });
 
 module.exports = {

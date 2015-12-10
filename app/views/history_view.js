@@ -5,6 +5,7 @@
 
 var View = require('./view');
 var store = require('lib/persistence');
+var Backbone = require('backbone');
 
 module.exports = View.extend({
   // Le template principal
@@ -13,6 +14,9 @@ module.exports = View.extend({
   subscriptions: {
     'checkins:reset': 'render',
     'checkins:new': 'insertCheckIn',
+  },
+  events: {
+    'click li[data-id]': 'showCheckInDetails'
   },
 
   insertCheckIn: function(checkIn) {
@@ -24,6 +28,17 @@ module.exports = View.extend({
     setTimeout(function() {
       list.find('li.new').removeClass('new');
     }, 0);
+  },
+
+  showCheckInDetails: function showCheckInDetails(e) {
+    var id = this.$(e.currentTarget).attr('data-id');
+    if (!id) {
+      return;
+    }
+
+    Backbone.history.navigate('check-in/' + id, {
+      trigger: true
+    });
   },
 
   // This data will be given to jade!

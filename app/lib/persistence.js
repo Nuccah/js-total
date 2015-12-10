@@ -49,7 +49,14 @@ function syncPending() {
 		});
 }
 
-syncPending();
+function initialLoad() {
+	localStore.all(function lsAll(checkins){
+		collection.reset(checkins);
+		syncPending();
+	});
+}
+
+initialLoad();
 
 Backbone.Mediator.subscribe(
 	'connectivity:online', syncPending

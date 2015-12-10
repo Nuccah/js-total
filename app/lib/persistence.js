@@ -8,6 +8,11 @@ var collection = new CheckInsCollection();
 var Backbone = require('backbone');
 var connectivity = require('lib/connectivity');
 var _ = require('underscore');
+var LawnChair = require('lawnchair');
+require('lawnchair-dom');
+var localStore = new LawnChair({
+	name: 'checkins'
+}, function() {});
 
 function addCheckIn(checkIn) {
 	checkIn.key = checkIn.key || Date.now();
@@ -51,10 +56,14 @@ Backbone.Mediator.subscribe(
 );
 
 collection.on('reset', function() {
+	localStore.nuke(function() {
+		localStore.batch(collection.toJSON());
+	});
 	Backbone.Mediator.publish('checkins:reset');
 });
 
 collection.on('add', function(model) {
+	localStore.save(model.toJSON());
 	Backbone.Mediator.publish('checkins:new', model.toJSON());
 });
 

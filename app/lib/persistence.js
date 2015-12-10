@@ -28,6 +28,10 @@ function getCheckIns() {
 	return collection.toJSON();
 }
 
+function getCheckIn(id) {
+	return collection.get(id);
+}
+
 var pendings = [];
 
 function accountForSync(model) {
@@ -90,5 +94,5 @@ collection.on('sync', function(model) {
 module.exports = {
 	addCheckIn: addCheckIn,
 	getCheckIns: getCheckIns,
-	syncPending: syncPending,
+	getCheckIn: getCheckIn,
 };

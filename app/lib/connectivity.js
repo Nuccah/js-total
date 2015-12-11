@@ -15,7 +15,7 @@ exports.isOnline = function() {
 	return true;
 };
 
-if (undefined !== typeof navigator && 'onLine' in navigator) {
+if ('undefined' !== typeof navigator && 'onLine' in navigator) {
 	exports.isOnline = function() {
 		return navigator.onLine;
 	};

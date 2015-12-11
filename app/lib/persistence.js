@@ -90,9 +90,13 @@ collection.on('sync', function(model) {
 
 function getCheckIn(id, cb) {
 	var checkIn = collection.get(id);
-	// Why defer? To guarantee both cases are treated equally
-	// if (checkIn) return _.defer(cb, null, checkIn.toJSON());
-	if (checkIn) return cb(null, checkIn);
+	// Why defer? Defer is basically a setTimeout 1ms
+	// The reason is because since the <else> is async, any lines
+	// that depend on the result could be 'undefined'
+	// Why ? The return may not be available before the remainder
+	// of the JS is executed
+	if (checkIn) return _.defer(cb, null, checkIn.toJSON());
+	// if (checkIn) return cb(null, checkIn); < -- NO
 
 	checkIn = new collection.model({
 		id: id

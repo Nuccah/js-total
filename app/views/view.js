@@ -13,6 +13,7 @@ var helpers = require('lib/view_helper');
 require('bootstrap');
 // …assurer le data-binding
 require('backbone-stickit');
+require('lib/appcache');
 
 // Classe de base pour toutes les vues.  Presque pile
 // celle de brunch.io (on a juste ajouté le _.defer pour

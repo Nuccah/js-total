@@ -33,7 +33,13 @@ module.exports = Backbone.Router.extend({
 
   showCheckIn: function showCheckIn(id) {
     this.home(true);
-    CheckInDetailsView.display(store.getCheckIn(id));
+    store.getCheckIn(id, function(error, checkIn) {
+      if (error) {
+        CheckInDetailsView.cancel();
+      } else {
+        CheckInDetailsView.display(checkIn);
+      }
+    });
   },
 
 

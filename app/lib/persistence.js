@@ -28,10 +28,6 @@ function getCheckIns() {
 	return collection.toJSON();
 }
 
-function getCheckIn(id) {
-	return collection.get(id);
-}
-
 var pendings = [];
 
 function accountForSync(model) {
@@ -89,7 +85,33 @@ collection.on('sync', function(model) {
 	}
 
 	localStore.save(model.toJSON());
+	Backbone.Mediator.publish('checkins:saved', model);
 });
+
+function getCheckIn(id, cb) {
+	var checkIn = collection.get(id);
+	// Why defer? To guarantee both cases are treated equally
+	// if (checkIn) return _.defer(cb, null, checkIn.toJSON());
+	if (checkIn) return cb(null, checkIn);
+
+	checkIn = new collection.model({
+		id: id
+	});
+	checkIn.urlRoot = collection.url;
+	checkIn.fetch({
+		success: setupCheckIn,
+		error: reportError
+	});
+
+	function setupCheckIn() {
+		collection.add(checkIn);
+		cb(null, checkIn.toJSON());
+	}
+
+	function reportError() {
+		cb(0xDEAD);
+	}
+}
 
 module.exports = {
 	addCheckIn: addCheckIn,

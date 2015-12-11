@@ -14,6 +14,7 @@ module.exports = View.extend({
   subscriptions: {
     'checkins:reset': 'render',
     'checkins:new': 'insertCheckIn',
+    'checkins:saved': 'updateId',
   },
   events: {
     'click li[data-id]': 'showCheckInDetails'
@@ -41,8 +42,12 @@ module.exports = View.extend({
     });
   },
 
+  updateId: function updateId(checkIn) {
+    this.$('#history li:first-child').attr('data-id', checkIn.id);
+  },
+
   // This data will be given to jade!
-  getRenderData: function() {
+    getRenderData: function() {
     return {
       list: this.renderTemplate({
           checkIns: store.getCheckIns()
